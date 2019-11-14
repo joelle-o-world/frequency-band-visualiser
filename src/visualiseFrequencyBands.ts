@@ -5,11 +5,21 @@ import collect, { collectAudio } from "./collect";
 import {Hopper, Windower, FFT, SpectralBandIntensity} from 'ts-dsp'
 import {SignalGraph, InteractiveTrackView} from 'scrollable-graphs';
 
-async function visualiseFrequencyBands(audio:AudioBuffer|Readable, {
-  windowSize = 2048,
-  hopSize = 441,
-  cutOffs = [0, 50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 22000],
-}={}) {
+
+const defualtCutOffs = [
+  0, 50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 22000
+];
+
+async function visualiseFrequencyBands(
+  audio:AudioBuffer|Readable, 
+  options:{windowSize?:number, hopSize?:number; cutOffs?:number[]}={}
+) {
+  // Destructure options
+  const {
+    windowSize = 2048, hopSize = 441,
+    cutOffs = defualtCutOffs,
+  } = options;
+
   let audiobuffer
   if(audio instanceof Readable)
     audiobuffer = await collectAudio(audio)

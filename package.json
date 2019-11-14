@@ -2,7 +2,8 @@
   "name": "frequency-band-visualiser",
   "version": "1.0.0",
   "description": "Visualise the frequency content of audio in the browser.",
-  "main": "index.js",
+  "main": "built/index.js",
+  "typings": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,8 +23,15 @@
   },
   "homepage": "https://github.com/joelyjoel/frequency-band-visualiser#readme",
   "dependencies": {
+    "@types/node": "^12.12.7",
     "audiobuffer": "^0.2.0",
     "scrollable-graphs": "^1.0.3",
-    "ts-dsp": "^1.0.0"
+    "ts-dsp": "^1.0.4"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }

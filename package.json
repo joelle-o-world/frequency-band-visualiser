@@ -1,0 +1,29 @@
+{
+  "name": "frequency-band-visualiser",
+  "version": "1.0.0",
+  "description": "Visualise the frequency content of audio in the browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelyjoel/frequency-band-visualiser.git"
+  },
+  "keywords": [
+    "frequency",
+    "band",
+    "visualiser"
+  ],
+  "author": "Joelyjoel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joelyjoel/frequency-band-visualiser/issues"
+  },
+  "homepage": "https://github.com/joelyjoel/frequency-band-visualiser#readme",
+  "dependencies": {
+    "audiobuffer": "^0.2.0",
+    "scrollable-graphs": "^1.0.3",
+    "ts-dsp": "^1.0.0"
+  }
+}

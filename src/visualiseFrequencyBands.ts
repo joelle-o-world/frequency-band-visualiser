@@ -5,26 +5,26 @@ import collect, { collectAudio } from "./collect";
 import {Hopper, Windower, FFT, SpectralBandIntensity} from 'ts-dsp'
 import {SignalGraph, InteractiveTrackView} from 'scrollable-graphs';
 
+import * as NodeAudioBuffer from 'audiobuffer';
 
 const defualtCutOffs = [
   0, 50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 22000
 ];
 
 async function visualiseFrequencyBands(
-  audio:AudioBuffer|Readable, 
-  options:{windowSize?:number, hopSize?:number; cutOffs?:number[]}={}
+  audio:{sampleRate:number, pcm:Float32Array}, 
+  options:{windowSize?:number, hopSize?:number; cutOffs?:number[]}={},
+  progressCallback?: (progress:number) => void
 ) {
+
   // Destructure options
   const {
     windowSize = 2048, hopSize = 441,
     cutOffs = defualtCutOffs,
   } = options;
 
-  let audiobuffer
-  if(audio instanceof Readable)
-    audiobuffer = await collectAudio(audio)
-  else
-    audiobuffer = audio
+  let audiobuffer:AudioBuffer = NodeAudioBuffer.fromArray([audio.pcm], audio.sampleRate);
+
 
   // Prepare audio for FFT.
   let hopper = new Hopper(windowSize, hopSize)
@@ -44,6 +44,14 @@ async function visualiseFrequencyBands(
     bandCollections.push( collect(band, 'intensity') )
   }
 
+  
+
+  if(progressCallback)
+    hopper.on('data', chunk => {
+      let progress = chunk.time/audiobuffer.length;
+      progressCallback(progress);
+    })
+
   // Pass audiobuffer to the hopper
   hopper.end(audiobuffer)
 
@@ -51,24 +59,25 @@ async function visualiseFrequencyBands(
   let data = await Promise.all(bandCollections)
 
   // Plot the graphs
-  let view = new InteractiveTrackView
+  /*let view = new InteractiveTrackView
  // view.canvas.setAttribute('height', '700')
   view.audiobuffer = audiobuffer
   view.t0 = view.tMin = 0
   view.t1 = view.tMax = audiobuffer.length / audiobuffer.sampleRate
-  let channelHeight = 1/data.length
+  let channelHeight = 1/data.length*/
+  let graphs = []
   for(let c=0; c<data.length; c++) {
     let graph = new SignalGraph(data[c], hopSize / audiobuffer.sampleRate)
     //graph.normaliseScale(channelHeight*c, channelHeight*(c+0.5))
-    graph.normaliseScale(1/2, 3/4)
+    //graph.normaliseScale(1/2, 3/4)
     graph.style = 'reflectAndFill'
     let hue = Math.round(c*256 / data.length)
     let alpha = 1 - (c / data.length) * (4/5)
     graph.color = 'hsla('+hue+', 50%, 50%,'+alpha+')' 
-    view.addGraph(graph)
+    graphs.push(graph)
   }
 
-  return view
+  return graphs
 }
 
 export {visualiseFrequencyBands}

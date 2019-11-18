@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>frequency-band-visualiser</title>
+    <link  href='demo.css' rel='stylesheet' type='text/css' />
+    <script src="lib.js"></script>
+    <script src='main.js'></script>
+  </head>
+
+  <body>
+    <div id='top_demo_wrapper'></div>
+
+    <h1>frequency-band-visualiser</h1>
+    <p>The diagram above uses colour to represent the frequency content of an audio file: sub-bass is red, high-treble is transparent violet and the rainbow spectrum represents all the colours inbetween. You can scroll using a trackpad to interact with it, exploring the waveform with varying scale and precision.</p>
+    <p>It may also be used as an audio player, click anywhere on the diagram to drop the needly at that point.</p>
+
+    <p>The code for this demo is open source and can be found on GitHub:</p>
+    <ul>
+      <li>frequency-band-visualiser: <a href="https://github.com/joelyjoel/frequency-band-visualiser">https://github.com/joelyjoel/frequency-band-visualiser</a></li>
+      <li>Interactive graphing library: <a href="https://github.com/joelyjoel/scrollable-graphs">https://github.com/joelyjoel/scrollable-graphss</a></li>
+      <li>Signal processing library: <a href="https://github.com/joelyjoel/ts-dsp">https://github.com/joelyjoel/ts-dsp</a></li>
+    </ul>
+
+    <h2>Try it at home!</h2>
+    <p>Use the button below to create a visualisation from your own audio files. Note, whatever file you submit will remain private on your local system and will not be uploaded to any server. (The processing is done using a web worker.)</p>
+
+    <form>
+      <input type='file' onchange="submitFile(this)" />
+    </form>
+    
+    <div id='user_graph_wrapper'></div>
+  </body>
+</html>

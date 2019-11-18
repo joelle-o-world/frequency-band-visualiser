@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.ts',
-  mode: 'production',
+  mode: 'development',
   module: {
     rules: [
       {
@@ -16,10 +16,10 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ]
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'lib.js',
     path: path.resolve(__dirname, 'dist'),
 
-    library: 'VisualiseFrequencyBands',
-    libraryTarget: 'window',
+    library: 'VFBLib',
+    libraryTarget: 'var',
   }
 };

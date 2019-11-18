@@ -25,7 +25,7 @@
   "dependencies": {
     "@types/node": "^12.12.7",
     "audiobuffer": "^0.2.0",
-    "scrollable-graphs": "^1.0.3",
+    "scrollable-graphs": "^1.0.8",
     "ts-dsp": "^1.0.4"
   },
   "devDependencies": {
